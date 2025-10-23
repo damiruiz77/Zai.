@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>¡Feliz Cumpleaños, Zai! 🌸</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #d299ff);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #d81b60;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .message {
+      font-size: 1.6rem;
+      margin: 18px 0;
+      line-height: 1.6;
+      text-shadow: 1px 1px 3px rgba(255,255,255,0.7);
+      max-width: 90%;
+      color: #880e4f;
+    }
+
+    #giftButton {
+      padding: 16px 40px;
+      font-size: 1.6rem;
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(255, 75, 43, 0.5);
+      transition: transform 0.2s;
+      margin-top: 20px;
+    }
+
+    #giftButton:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 30px;
+      font-size: 1.1rem;
+      color: #5d4037;
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.7);
+    }
+
+    .falling-flower {
+      position: absolute;
+      top: -60px;
+      font-size: 1.8rem;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>¡Feliz Cumpleaños, Zai! 🌸🎂</h1>
+    <div class="message">SIEMPRE VAS A PODER CONTAR CONMIGO</div>
+    <div class="message">SOS MI PAISAJE MÁS SOÑADO</div>
+    <button id="giftButton">Regalo 🎁</button>
+    <footer>Que tu día esté lleno de flores y amor, Te extraño 💖</footer>
+  </div>
+
+  <script>
+    const flowers = ['🌸', '🌹', '🌺', '🌷', '💐', '🌼', '💮'];
+
+    document.getElementById('giftButton').addEventListener('click', function() {
+      // Número de flores: entre 40 y 60
+      const count = 40 + Math.floor(Math.random() * 21);
+
+      for (let i = 0; i < count; i++) {
+        // Crear flor
+        const flower = document.createElement('div');
+        flower.className = 'falling-flower';
+        flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+        document.body.appendChild(flower);
+
+        // Posición horizontal aleatoria (dentro de la pantalla)
+        const leftPos = Math.random() * window.innerWidth;
+        flower.style.left = `${leftPos}px`;
+
+        // Duración y retraso aleatorios
+        const duration = 3 + Math.random() * 4; // 3 a 7 segundos
+        const delay = Math.random() * 1.5; // hasta 1.5s de retraso
+
+        // Aplicar animación con CSS personalizada vía JS
+        flower.style.opacity = '0';
+        flower.style.transition = 'none';
+        void flower.offsetWidth; // Forzar reflow
+
+        // Iniciar caída
+        setTimeout(() => {
+          flower.style.transition = `opacity ${duration / 3}s, transform ${duration}s cubic-bezier(0.2, 0.8, 0.4, 1)`;
+          flower.style.opacity = '0.95';
+          flower.style.transform = `translateY(${window.innerHeight + 100}px) rotate(${360 * (Math.random() > 0.5 ? 1 : -1)}deg)`;
+        }, delay * 1000);
+
+        // Eliminar después de la animación
+        setTimeout(() => {
+          if (flower.parentNode) {
+            flower.parentNode.removeChild(flower);
+          }
+        }, (duration + delay) * 1000);
+      }
+    });
+  </script>
+</body>
+</html>
